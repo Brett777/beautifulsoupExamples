@@ -105,7 +105,8 @@ df["Item Number"] = df["Item Number"].str.replace('"', '')
 df.sort_values(by="Description", inplace=True)
 
 # Write the catalog of items to a file
-df.to_csv("/Users/brett.olmstead/Downloads/partyTracker/catalog.csv", index=False)
+#df.to_csv("/Users/brett.olmstead/Downloads/partyTracker/catalog.csv", index=False) # mac
+df.to_csv("C:\\Users\\Brett\\Downloads\\PartyTracker\\catalog.csv", index=False) # windows
 
 # upload the file to s3 bucket
 import boto3
@@ -115,7 +116,8 @@ s3 = boto3.resource('s3')
 for bucket in s3.buckets.all():
     print(bucket.name)
 
-data = open('/Users/brett.olmstead/Downloads/partyTracker/catalog.csv', 'rb')
+# data = open('/Users/brett.olmstead/Downloads/partyTracker/catalog.csv', 'rb') # mac
+data = open('C:\\Users\\Brett\\Downloads\\PartyTracker\\catalog.csv', 'rb') # windows
 s3.Bucket('partytracker').put_object(Key='catalog.csv', Body=data)
 object_acl = s3.ObjectAcl('partytracker', 'catalog.csv')
 response = object_acl.put(ACL='public-read')
