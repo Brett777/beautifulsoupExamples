@@ -94,7 +94,7 @@ df5 = pd.read_html(str(table), flavor="bs4")  # Get the table as Pandas
 df5 = df5[1]
 df5.columns = ["Item Number", "Description", "Item Type", "Retail Price", "Cost Price"]
 
-driver.close()
+driver.quit()
 
 # Put all the items together
 df = pd.concat([df, df2, df3, df4, df5])
@@ -108,16 +108,17 @@ df.sort_values(by="Description", inplace=True)
 #df.to_csv("/Users/brett.olmstead/Downloads/partyTracker/catalog.csv", index=False) # mac
 df.to_csv("C:\\Users\\Brett\\Downloads\\PartyTracker\\catalog.csv", index=False) # windows
 
+print("Uploading...")
+
 # upload the file to s3 bucket
 import boto3
 
 s3 = boto3.resource('s3')
-
-for bucket in s3.buckets.all():
-    print(bucket.name)
 
 # data = open('/Users/brett.olmstead/Downloads/partyTracker/catalog.csv', 'rb') # mac
 data = open('C:\\Users\\Brett\\Downloads\\PartyTracker\\catalog.csv', 'rb') # windows
 s3.Bucket('partytracker').put_object(Key='catalog.csv', Body=data)
 object_acl = s3.ObjectAcl('partytracker', 'catalog.csv')
 response = object_acl.put(ACL='public-read')
+
+print("All done.")
