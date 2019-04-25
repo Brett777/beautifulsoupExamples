@@ -4,7 +4,8 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 # Start Selenium
-driver = webdriver.Chrome("/Users/brett.olmstead/Downloads/chromedriver 2")
+# mac #driver = webdriver.Chrome("/Users/brett.olmstead/Downloads/chromedriver 2")
+driver = webdriver.Chrome("C:\\Users\\Brett\\Downloads\\chromedriver.exe")
 
 # Go to the Tupperware page and login
 driver.get("https://my.tupperware.ca/")
